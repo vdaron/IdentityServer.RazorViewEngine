@@ -1,0 +1,46 @@
+﻿@model IdentityServer3.Core.ViewModels.CommonViewModel
+
+@{
+   var applicationPath = new Uri(Model.SiteUrl).AbsolutePath;
+    if (applicationPath.EndsWith("/"))
+    {
+        applicationPath = applicationPath.Substring(0, applicationPath.Length - 1);
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>@Model.SiteName</title>
+    <link rel="stylesheet" type="text/css" href="@applicationPath/../Content/bootstrap.min.css"/>
+</head>
+<body lang="en">
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+        <a href="{ApplicationPath}/">
+            <span class="navbar-brand">@Model.SiteName</span>
+        </a>
+    </div>
+    @if (Model.CurrentUser != null)
+    {
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Model.CurrentUser <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="@Model.LogoutUrl">Logout</a></li>
+                    <li class="divider" ng-show="model.loginWithDifferentAccountUrl"></li>
+                    <li><a href="{{model.loginWithDifferentAccountUrl}}" ng-show="model.loginWithDifferentAccountUrl">Login With Different Account</a></li>
+                </ul>
+            </li>
+        </ul>
+    }
+</div>
+
+<div class='container page-{page}' ng-cloak>
+    @RenderBody()
+</div>
+
+<script src="@applicationPath/../Scripts/bootstrap.min.js"></script>
+</body>
+</html>

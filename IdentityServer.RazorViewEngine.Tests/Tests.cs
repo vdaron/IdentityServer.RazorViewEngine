@@ -6,6 +6,7 @@ using IdentityServer.RazorViewEngine.ViewLoaders;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RazorEngine.Configuration;
 
 namespace Identity.razorViewEngine.Tests
 {
@@ -18,7 +19,7 @@ namespace Identity.razorViewEngine.Tests
 			var viewLoader = new InMemoryViewLoader();
 			viewLoader.AddView(@"<b>@Model.ClientName</b>", "login");
 
-			RazorViewService e = new RazorViewService(new RazorViewServiceConfiguration(viewLoader));
+			RazorViewService e = new RazorViewService(new TemplateServiceConfiguration {TemplateManager = new IdentityTemplateManager(viewLoader)});
 
 			var str = e.Login(new LoginViewModel{ClientName = "My Client Name"}, new SignInMessage()).Result;
 
@@ -32,7 +33,7 @@ namespace Identity.razorViewEngine.Tests
 			viewLoader.AddView("<layout>@RenderBody()</layout>", "myLayout");
 			viewLoader.AddView(@"@{this.Layout = @""mylayout"";}<b>@Model.ClientName</b>", "login");
 
-			RazorViewService e = new RazorViewService(new RazorViewServiceConfiguration(viewLoader));
+			RazorViewService e = new RazorViewService(new TemplateServiceConfiguration { TemplateManager = new IdentityTemplateManager(viewLoader) });
 
 			var str = e.Login(new LoginViewModel { ClientName = "My Client Name" }, new SignInMessage()).Result;
 
@@ -46,7 +47,7 @@ namespace Identity.razorViewEngine.Tests
 			viewLoader.AddView(@"<b>@Model.ClientName</b>", "login");
 			viewLoader.AddView(@"<override>@Model.ClientName</override>", "login", "clientid");
 
-			RazorViewService e = new RazorViewService(new RazorViewServiceConfiguration(viewLoader));
+			RazorViewService e = new RazorViewService(new TemplateServiceConfiguration { TemplateManager = new IdentityTemplateManager(viewLoader) });
 
 			var str = e.Login(new LoginViewModel { ClientName = "My Client Name" }, new SignInMessage {ClientId = "clientid"}).Result;
 
@@ -61,7 +62,7 @@ namespace Identity.razorViewEngine.Tests
 			viewLoader.AddView(@"<override>@Model.ClientName</override>", "login", "clientid");
 			viewLoader.AddView(@"<T1>@Model.ClientName</T1>", "login", "clientid", "T1");
 
-			RazorViewService e = new RazorViewService(new RazorViewServiceConfiguration(viewLoader));
+			RazorViewService e = new RazorViewService(new TemplateServiceConfiguration { TemplateManager = new IdentityTemplateManager(viewLoader) });
 
 			var str = e.Login(new LoginViewModel { ClientName = "My Client Name" }, new SignInMessage { ClientId = "clientid" }).Result;
 

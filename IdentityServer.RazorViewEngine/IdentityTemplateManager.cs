@@ -10,7 +10,7 @@ using RazorEngine.Templating;
 
 namespace IdentityServer.RazorViewEngine
 {
-	class IdentityTemplateManager: ITemplateManager
+	public class IdentityTemplateManager: ITemplateManager
 	{
 		private readonly IRazorViewLoader _razorViewLoader;
 

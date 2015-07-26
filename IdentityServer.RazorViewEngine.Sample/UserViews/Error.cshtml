@@ -1,0 +1,18 @@
+﻿@model IdentityServer3.Core.ViewModels.ErrorViewModel
+
+@{
+   Layout = "Layout";
+}
+
+<div class="page-header">
+    <h1>Error</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="alert alert-danger">
+            <div ng-show="model.errorMessage">@Model.ErrorMessage</div>
+        </div>
+        <div class="request-id">Request Id: <span>@Model.RequestId</span></div>
+    </div>
+</div>

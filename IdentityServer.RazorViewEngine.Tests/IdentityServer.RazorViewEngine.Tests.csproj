@@ -38,6 +38,10 @@
     <Reference Include="IdentityServer3">
       <HintPath>..\packages\IdentityServer3.2.0.0-rc2\lib\net45\IdentityServer3.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.7.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\IdentityServer.RazorViewEngine\bin\Debug\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>

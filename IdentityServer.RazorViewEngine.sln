@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.RazorViewEng
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.RazorViewEngine.Tests", "IdentityServer.RazorViewEngine.Tests\IdentityServer.RazorViewEngine.Tests.csproj", "{B8D4F96C-7120-49FE-80C6-622181360F26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.RazorViewEngine.Sample", "IdentityServer.RazorViewEngine.Sample\IdentityServer.RazorViewEngine.Sample.csproj", "{607720D7-D5C5-4D3E-B44A-9C9184C1732B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B8D4F96C-7120-49FE-80C6-622181360F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8D4F96C-7120-49FE-80C6-622181360F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8D4F96C-7120-49FE-80C6-622181360F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{607720D7-D5C5-4D3E-B44A-9C9184C1732B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{607720D7-D5C5-4D3E-B44A-9C9184C1732B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{607720D7-D5C5-4D3E-B44A-9C9184C1732B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{607720D7-D5C5-4D3E-B44A-9C9184C1732B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

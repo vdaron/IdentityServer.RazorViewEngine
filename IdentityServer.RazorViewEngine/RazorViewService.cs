@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IdentityServer.RazorViewEngine.ViewLoaders;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.Core.Services.Default;
@@ -19,9 +20,10 @@ namespace IdentityServer.RazorViewEngine
 	{
 		private readonly IRazorEngineService _service;
 
-		public RazorViewService(RazorViewServiceConfiguration config)
+		public RazorViewService(TemplateServiceConfiguration config)
 		{
-			_service = RazorEngineService.Create(config.TemplateServiceConfiguration);
+			config.Debug = true;
+			_service = RazorEngineService.Create(config);
 		}
 
 		public Task<Stream> Login(LoginViewModel model, SignInMessage message)
@@ -36,22 +38,22 @@ namespace IdentityServer.RazorViewEngine
 
 		public Task<Stream> LoggedOut(LoggedOutViewModel model, SignOutMessage message)
 		{
-			return Task.FromResult(RunTemplate("logout", model, message.ClientId));
+			return Task.FromResult(RunTemplate("logged-out", model, message.ClientId));
 		}
 
 		public Task<Stream> Consent(ConsentViewModel model, ValidatedAuthorizeRequest authorizeRequest)
 		{
-			return Task.FromResult(RunTemplate("logout", model, authorizeRequest.ClientId));
+			return Task.FromResult(RunTemplate("consent", model, authorizeRequest.ClientId));
 		}
 
 		public Task<Stream> ClientPermissions(ClientPermissionsViewModel model)
 		{
-			return Task.FromResult(RunTemplate("logout", model));
+			return Task.FromResult(RunTemplate("permission", model));
 		}
 
 		public Task<Stream> Error(ErrorViewModel model)
 		{
-			return Task.FromResult(RunTemplate("logout", model));
+			return Task.FromResult(RunTemplate("error", model));
 		}
 
 		protected Stream RunTemplate(string key, object model, string clientId = null, string tenant = null)
