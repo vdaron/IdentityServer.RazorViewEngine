@@ -2,7 +2,9 @@
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using IdentityServer.RazorViewEngine.Sample.App_Code;
@@ -11,6 +13,8 @@ using IdentityServer3.Core;
 using IdentityServer3.Core.Logging;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Resources;
+using IdentityServer3.Core.Services;
+using IdentityServer3.Core.Services.Default;
 using IdentityServer3.Core.Services.InMemory;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -31,23 +35,22 @@ namespace IdentityServer.RazorViewEngine.Sample
 			var vl = new InMemoryViewLoader();
 			vl.AddView("<H1>test</H1>", "login");
 
+			string currentDirectory = Path.GetDirectoryName(new Uri(Assembly.GetCallingAssembly().CodeBase).LocalPath);
+
 			app.Map("/identity", idsrvApp =>
 			{
 				idsrvApp.UseIdentityServer(new IdentityServerOptions
 				{
 					SiteName = "Embedded IdentityServer",
-					SigningCertificate = LoadCertificate(),
+					SigningCertificate = LoadCertificate(currentDirectory),
 
 					Factory = new IdentityServerServiceFactory
 					{
+						CorsPolicyService = new Registration<ICorsPolicyService>(x => new DefaultCorsPolicyService() { AllowAll = true }),
 						ViewService =
 							new RazorViewServiceRegistration(
 								new RazorViewServiceConfiguration(
-									new Registration<IRazorViewLoader>(x => new DiskViewLoader(@"E:\IdentityServer.RazorViewEngine\IdentityServer.RazorViewEngine.Sample\UserViews")))
-								{
-									Debug = true,
-									Language = Language.CSharp
-								})
+									new Registration<IRazorViewLoader>(x => new DiskViewLoader(Path.Combine(currentDirectory, @"..\UserViews")))))
 					}.UseInMemoryClients(Clients.Get())
 						.UseInMemoryScopes(StandardScopes.All)
 						.UseInMemoryUsers(Users.Get())
@@ -69,10 +72,9 @@ namespace IdentityServer.RazorViewEngine.Sample
 			});
 		}
 
-		X509Certificate2 LoadCertificate()
+		X509Certificate2 LoadCertificate(string directoryName)
 		{
-			//TODO
-			return new X509Certificate2(@"E:\DepFac.IdentityServer\idsrv3test.pfx", "idsrv3test");
+			return new X509Certificate2(Path.Combine(directoryName, @"..\..\idsrv3test.pfx"), "idsrv3test");
 		}
 	}
 
