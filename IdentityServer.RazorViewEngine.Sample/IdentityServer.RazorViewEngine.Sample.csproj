@@ -224,6 +224,7 @@
     <Content Include="UserViews\Logout.cshtml" />
     <Content Include="UserViews\Error.cshtml" />
     <Content Include="UserViews\Permission.cshtml" />
+    <Content Include="UserViews\Loggedout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
