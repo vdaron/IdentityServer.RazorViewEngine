@@ -33,12 +33,12 @@ namespace IdentityServer.RazorViewEngine
 
 		public Task<Stream> Logout(LogoutViewModel model, SignOutMessage message)
 		{
-			return Task.FromResult(RunTemplate("logout", model, message.ClientId));
+			return Task.FromResult(RunTemplate("logout", model, message?.ClientId));
 		}
 
 		public Task<Stream> LoggedOut(LoggedOutViewModel model, SignOutMessage message)
 		{
-			return Task.FromResult(RunTemplate("loggedout", model, message.ClientId));
+			return Task.FromResult(RunTemplate("loggedout", model, message?.ClientId));
 		}
 
 		public Task<Stream> Consent(ConsentViewModel model, ValidatedAuthorizeRequest authorizeRequest)
