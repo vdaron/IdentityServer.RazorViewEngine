@@ -31,10 +31,7 @@ namespace IdentityServer.RazorViewEngine.Sample
 				.WriteTo
 				.LiterateConsole(outputTemplate: "{Timestamp:HH:MM} [{Level}] ({Name:l}){NewLine} {Message}{NewLine}{Exception}")
 				.CreateLogger();
-
-			var vl = new InMemoryViewLoader();
-			vl.AddView("<H1>test</H1>", "login");
-
+			
 			string currentDirectory = Path.GetDirectoryName(new Uri(Assembly.GetCallingAssembly().CodeBase).LocalPath);
 
 			app.Map("/identity", idsrvApp =>
