@@ -47,7 +47,7 @@ namespace IdentityServer.RazorViewEngine.Sample
 						ViewService =
 							new RazorViewServiceRegistration(
 								new RazorViewServiceConfiguration(
-									new Registration<IRazorViewLoader>(x => new DiskViewLoader(Path.Combine(currentDirectory, @"..\UserViews")))))
+									new Registration<IRazorViewLoader>(x => new DiskViewLoader(new[] { Path.Combine(currentDirectory, @"..\UserViews")}))))
 					}.UseInMemoryClients(Clients.Get())
 						.UseInMemoryScopes(StandardScopes.All)
 						.UseInMemoryUsers(Users.Get())

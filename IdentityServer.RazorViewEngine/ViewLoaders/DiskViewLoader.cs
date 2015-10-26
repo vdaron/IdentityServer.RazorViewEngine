@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,28 +8,37 @@ namespace IdentityServer.RazorViewEngine.ViewLoaders
 {
 	public class DiskViewLoader : IRazorViewLoader
 	{
-		private readonly string _basePath;
+		private readonly IEnumerable<string> _viewPaths;
+		private readonly string _viewExtension;
 
-		public DiskViewLoader(string basePath)
+		public string ViewExtension { get; set; }
+
+		public DiskViewLoader(IEnumerable<string> viewPaths, string viewExtension = ".cshtml")
 		{
-			_basePath = basePath;
+			_viewPaths = viewPaths;
+			_viewExtension = viewExtension;
 		}
 
 		public string Load(string name, string clientId = null, string tenant = null)
 		{
 			var paths = new List<string>();
 
+			if (!name.EndsWith(_viewExtension))
+			{
+				name += _viewExtension;
+			}
+
 			if (!string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(tenant))
 			{
-				paths.Add(Path.Combine(_basePath, clientId, tenant, name + ".cshtml"));
+				paths.AddRange(_viewPaths.Select(path => Path.Combine(path, clientId, tenant, name)));
 			}
 
 			if (!string.IsNullOrWhiteSpace(clientId))
 			{
-				paths.Add(Path.Combine(_basePath, clientId, name + ".cshtml"));
+				paths.AddRange(_viewPaths.Select(path => Path.Combine(path, clientId, name)));
 			}
-			
-			paths.Add(Path.Combine(_basePath, name + ".cshtml"));
+
+			paths.AddRange(_viewPaths.Select(path => Path.Combine(path, name)));
 
 			string file = paths.FirstOrDefault(File.Exists);
 
