@@ -1,0 +1,23 @@
+﻿@model IdentityServer3.Core.ViewModels.LoggedOutViewModel
+
+@{
+   Layout = "Layout";
+}
+
+<div class="page-header">
+    <h1>
+        Logout
+        <small>You are now logged out</small>
+    </h1>
+    @if (Model.RedirectUrl != null)
+    {
+        <div >
+            Click <a href="@Model.RedirectUrl">here</a> to return to the @Model.ClientName application.
+        </div>
+    }
+
+    @foreach (var iframeurl in Model.IFrameUrls)
+    {
+        <iframe class="signout" src="@iframeurl"></iframe>
+    }
+</div>

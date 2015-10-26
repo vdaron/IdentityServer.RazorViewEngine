@@ -1,0 +1,54 @@
+﻿@model IdentityServer3.Core.ViewModels.CommonViewModel
+
+@{
+   var applicationPath = new Uri(Model.SiteUrl).AbsolutePath;
+   if (applicationPath.EndsWith("/"))
+   {
+       applicationPath = applicationPath.Substring(0, applicationPath.Length - 1);
+   }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>@Model.SiteName</title>
+    <link rel="stylesheet" type="text/css" href="@applicationPath/../Content/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="@applicationPath/../Content/Site.css"/>
+</head>
+<body lang="en">
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="@applicationPath/" class="navbar-brand">@Model.SiteName</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @if (Model.CurrentUser != null)
+                {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Model.CurrentUser <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Model.LogoutUrl">Logout</a></li>
+                            @RenderSection("menu", false)
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class='container page-{page}'>
+    @RenderBody()
+</div>
+
+<script src="@applicationPath/../Scripts/bootstrap.min.js"></script>
+<script src="@applicationPath/../Scripts/jquery-1.10.2.js"></script>
+</body>
+</html>
