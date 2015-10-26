@@ -22,17 +22,17 @@ namespace IdentityServer.RazorViewEngine
 				throw new ArgumentNullException(nameof(razorViewLoaderRegistration));
 
 			RazorViewLoader = razorViewLoaderRegistration;
-			this.CompilerServiceFactory = (ICompilerServiceFactory) new DefaultCompilerServiceFactory();
-			this.EncodedStringFactory = (IEncodedStringFactory) new HtmlEncodedStringFactory();
-			this.CachingProvider = (ICachingProvider) new DefaultCachingProvider();
-			this.Namespaces = (ISet<string>) new HashSet<string>()
+			CompilerServiceFactory = new DefaultCompilerServiceFactory();
+			EncodedStringFactory = new HtmlEncodedStringFactory();
+			CachingProvider = new DefaultCachingProvider();
+			Namespaces = new HashSet<string>()
 			{
 				"System",
 				"System.Collections.Generic",
 				"System.Linq"
 			};
 			RazorEngineConfigurationSection configuration = RazorEngineConfigurationSection.GetConfiguration();
-			this.Language = configuration?.DefaultLanguage ?? Language.CSharp;
+			Language = configuration?.DefaultLanguage ?? Language.CSharp;
 		}
 
 		public Registration<IRazorViewLoader> RazorViewLoader { get; set; }
