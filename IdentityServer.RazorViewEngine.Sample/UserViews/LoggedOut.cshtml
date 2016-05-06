@@ -21,3 +21,17 @@
         <iframe class="signout" src="@iframeurl"></iframe>
     }
 </div>
+
+@section scripts
+{
+    @if (Model.AutoRedirect && !string.IsNullOrWhiteSpace(Model.RedirectUrl))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                setTimeout(function() {
+                    window.location.href = "@Model.RedirectUrl";
+                }, @Model.AutoRedirectDelay * 1000);
+            });
+        </script>
+    }
+}
