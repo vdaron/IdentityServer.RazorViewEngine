@@ -59,14 +59,16 @@
 
                 @if (client.ResourcePermissions.Any())
                 {
-                <div>
-                    <div class="permission-type">Resource Permissions</div>
-                    <ul>
-                        @foreach (var perms in client.ResourcePermissions)
-                        {
-                        <li>@perms.DisplayName</li>}
-                    </ul>
-                </div>}
+                   <div>
+                       <div class="permission-type">Resource Permissions</div>
+                       <ul>
+                           @foreach (var perms in client.ResourcePermissions)
+                           {
+                              <li>@perms.DisplayName</li>
+                           }
+                       </ul>
+                   </div>
+                }
             </div>
             <div class="col-sm-2">
                 <form name="form" method="post" action="@Model.RevokePermissionUrl" class="consent-form">
