@@ -26,32 +26,32 @@ namespace IdentityServer.RazorViewEngine
 			_service = RazorEngineService.Create(config);
 		}
 
-		public Task<Stream> Login(LoginViewModel model, SignInMessage message)
+		public virtual Task<Stream> Login(LoginViewModel model, SignInMessage message)
 		{
 			return Task.FromResult(RunTemplate("login", model, message.ClientId, message.Tenant));
 		}
 
-		public Task<Stream> Logout(LogoutViewModel model, SignOutMessage message)
+		public virtual Task<Stream> Logout(LogoutViewModel model, SignOutMessage message)
 		{
 			return Task.FromResult(RunTemplate("logout", model, message?.ClientId));
 		}
 
-		public Task<Stream> LoggedOut(LoggedOutViewModel model, SignOutMessage message)
+		public virtual Task<Stream> LoggedOut(LoggedOutViewModel model, SignOutMessage message)
 		{
 			return Task.FromResult(RunTemplate("loggedout", model, message?.ClientId));
 		}
 
-		public Task<Stream> Consent(ConsentViewModel model, ValidatedAuthorizeRequest authorizeRequest)
+		public virtual Task<Stream> Consent(ConsentViewModel model, ValidatedAuthorizeRequest authorizeRequest)
 		{
 			return Task.FromResult(RunTemplate("consent", model, authorizeRequest.ClientId));
 		}
 
-		public Task<Stream> ClientPermissions(ClientPermissionsViewModel model)
+		public virtual Task<Stream> ClientPermissions(ClientPermissionsViewModel model)
 		{
 			return Task.FromResult(RunTemplate("permission", model));
 		}
 
-		public Task<Stream> Error(ErrorViewModel model)
+		public virtual Task<Stream> Error(ErrorViewModel model)
 		{
 			return Task.FromResult(RunTemplate("error", model));
 		}
