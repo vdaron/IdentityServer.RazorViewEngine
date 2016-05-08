@@ -57,9 +57,13 @@ namespace IdentityServer.RazorViewEngine
 		}
 
 		protected Stream RunTemplate(string key, object model, string clientId = null, string tenant = null)
-		{
-			return StringToStream(_service.RunCompile(new IdentityTemplateKey(key, clientId, tenant),model.GetType(), model));
-		}
+	        {
+	            var viewBag = new DynamicViewBag(new Dictionary<string, object>
+	            {
+	                { "Page", key }
+	            });
+	            return StringToStream(_service.RunCompile(new IdentityTemplateKey(key, clientId, tenant), model.GetType(), model, viewBag));
+	        }
 
 		private static Stream StringToStream(string s)
 		{

@@ -44,11 +44,12 @@
     </div>
 </div>
 
-<div class='container page-{page}'>
+<div class='container page-@ViewBag.Page'>
     @RenderBody()
 </div>
 
 <script src="@applicationPath/../Scripts/jquery-1.10.2.js"></script>
 <script src="@applicationPath/../Scripts/bootstrap.min.js"></script>
+@RenderSection("scripts", false)
 </body>
 </html>
