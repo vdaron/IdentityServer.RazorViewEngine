@@ -3,7 +3,7 @@ using RazorEngine.Templating;
 
 namespace IdentityServer.RazorViewEngine
 {
-	class IdentityTemplateKey : ITemplateKey
+	public class IdentityTemplateKey : ITemplateKey
 	{
 		public IdentityTemplateKey(string name, 
 		                           string clientId,
