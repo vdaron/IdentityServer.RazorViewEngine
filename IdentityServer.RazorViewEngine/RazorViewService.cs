@@ -16,47 +16,52 @@ using RazorEngine.Templating;
 
 namespace IdentityServer.RazorViewEngine
 {
-	public class RazorViewService : IViewService
+	public class RazorViewService : DefaultViewService
 	{
 		private readonly IRazorEngineService _service;
 
-		public RazorViewService(TemplateServiceConfiguration config)
-		{
+		public RazorViewService(TemplateServiceConfiguration config) : base(new DefaultViewServiceOptions(), new EmbeddedAssetsViewLoader())
+		{            
 			config.Debug = true;
 			_service = RazorEngineService.Create(config);
 		}
 
-		public virtual Task<Stream> Login(LoginViewModel model, SignInMessage message)
+		public override Task<Stream> Login(LoginViewModel model, SignInMessage message)
 		{
 			return Task.FromResult(RunTemplate("login", model, message.ClientId, message.Tenant));
 		}
 
-		public virtual Task<Stream> Logout(LogoutViewModel model, SignOutMessage message)
+        public override Task<Stream> Logout(LogoutViewModel model, SignOutMessage message)
 		{
 			return Task.FromResult(RunTemplate("logout", model, message?.ClientId));
 		}
 
-		public virtual Task<Stream> LoggedOut(LoggedOutViewModel model, SignOutMessage message)
+        public override Task<Stream> LoggedOut(LoggedOutViewModel model, SignOutMessage message)
 		{
 			return Task.FromResult(RunTemplate("loggedout", model, message?.ClientId));
 		}
 
-		public virtual Task<Stream> Consent(ConsentViewModel model, ValidatedAuthorizeRequest authorizeRequest)
+        public override Task<Stream> Consent(ConsentViewModel model, ValidatedAuthorizeRequest authorizeRequest)
 		{
 			return Task.FromResult(RunTemplate("consent", model, authorizeRequest.ClientId));
 		}
 
-		public virtual Task<Stream> ClientPermissions(ClientPermissionsViewModel model)
+        public virtual Task<Stream> ClientPermissions(ClientPermissionsViewModel model)
 		{
 			return Task.FromResult(RunTemplate("permission", model));
 		}
 
-		public virtual Task<Stream> Error(ErrorViewModel model)
+        public override Task<Stream> Error(ErrorViewModel model)
 		{
 			return Task.FromResult(RunTemplate("error", model));
 		}
 
-		protected Stream RunTemplate(string key, object model, string clientId = null, string tenant = null)
+        public override Task<Stream> AuthorizeResponse(AuthorizeResponseViewModel model)
+        {
+            return Task.FromResult(RunTemplate("formpostresponse", model));
+        }
+
+        protected Stream RunTemplate(string key, object model, string clientId = null, string tenant = null)
 	        {
 	            var viewBag = new DynamicViewBag(new Dictionary<string, object>
 	            {
